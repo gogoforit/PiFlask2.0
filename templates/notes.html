@@ -1,0 +1,80 @@
+
+<!DOCTYPE html>
+<html lang="en">
+{#    <a>#}
+{#            <img class="logo" src={{ url_for('static',filename='assets/img/backgrounds/1.jpg') }} >#}
+{#    </a>#}
+    <head>
+
+        <meta charset="utf-8">
+        <title>网信院WIFI签到</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <!-- CSS -->
+        <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=PT+Sans:400,700'>
+        <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Oleo+Script:400,700'>
+        <link rel="stylesheet" href="static/assets/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="static/assets/css/style.css">
+
+        <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+    </head>
+
+    <body background={{ url_for('static',filename='assets/img/backgrounds/1.jpg') }}>
+
+        <div class="header">
+            <div class="container
+                <div class="row">
+                    <div class="logo span4">
+                        <div style="float: left ;width: 60px;height: 60px" >
+                            <img  class="logo_img"   src={{ url_for('static',filename='assets/img/logo.jpg') }}  >
+                        </div>
+                        <div style="float: left">
+                            <h1 ><a href="/">&nbsp&nbsp &nbsp &nbsp 网信院 <span class="red">.</span></a></h1>
+                        </div>
+                        <div style="float: right ;width: 60px;height: 60px" >
+                            <img  class="logo_img"   src={{ url_for('static',filename='assets/img/logo.jpg') }}  >
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="register-container container">
+            <div class="row">
+
+                <div class="register span6">
+                    <form action="modify_information" method="post">
+                        <h2>注意事项</h2>
+                        <label for="firstname"><strong>1.MAC格式要求：</strong>输入字母均为小写，间隔符号为"<strong>-</strong>"，即减号。</label>
+                        <label for="firstname">例如，1a-8g-e5-bb-fe-ew。</label>
+                        <label for="firstname"><strong>2.日期样例：2017-05-04</strong></label>
+                        <label for="lastname"><strong>3.班级样例：15180xx</strong></label>
+                        <br>
+                        <br>
+                        <a href="/">
+                            <button type="button">返回</button>
+                        </a>
+
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Javascript -->
+        <script src="static/assets/js/jquery-1.8.2.min.js"></script>
+        <script src="static/assets/bootstrap/js/bootstrap.min.js"></script>
+        <script src="static/assets/js/jquery.backstretch.min.js"></script>
+        <script src="static/assets/js/scripts.js"></script>
+
+    </body>
+
+</html>
+

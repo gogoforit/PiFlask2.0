@@ -1,0 +1,94 @@
+
+<!DOCTYPE html>
+<html lang="en">
+{#    <a>#}
+{#            <img class="logo" src={{ url_for('static',filename='assets/img/backgrounds/1.jpg') }} >#}
+{#    </a>#}
+    <head>
+
+        <meta charset="utf-8">
+        <title>网信院WIFI签到</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <!-- CSS -->
+        <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=PT+Sans:400,700'>
+        <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Oleo+Script:400,700'>
+        <link rel="stylesheet" href="static/assets/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="static/assets/css/style.css">
+
+        <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+    </head>
+
+    <body background={{ url_for('static',filename='assets/img/backgrounds/1.jpg') }}>
+
+        <div class="header">
+            <div class="container
+                <div class="row">
+                    <div class="logo span4">
+                        <div style="float: left ;width: 60px;height: 60px" >
+                            <img  class="logo_img"   src={{ url_for('static',filename='assets/img/logo.jpg') }}  >
+                        </div>
+                        <div style="float: left">
+                            <h1 ><a href="/">&nbsp&nbsp &nbsp &nbsp 网信院 <span class="red">.</span></a></h1>
+                        </div>
+                        <div style="float: right ;width: 60px;height: 60px" >
+                            <img  class="logo_img"   src={{ url_for('static',filename='assets/img/logo.jpg') }}  >
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="register-container container">
+            <div class="row">
+
+                <div class="register span6">
+                    <form action="" method="post">
+                        <h2>签到信息查询</h2>
+                        <label for="firstname">姓 名</label>
+                        <input type="text" id="firstname" name="name" placeholder="请输入您的姓名...">
+                        <label for="lastname">查询日期&nbsp&nbsp&nbsp(例如:2017-05-05)</label>
+                        <input type="text" id="lastname" name="date" placeholder="请输入您要查询的日期...">
+                        <br>
+                        {{ get_flashed_messages()[0] }}
+                        <br>
+                        <button type="submit">查询</button>
+                        <a href="/">
+                            <button type="button">返回</button>
+                        </a>
+
+                        {% if sign_info %}
+                        <ul>
+                            {% for each in sign_info %}
+                                <li>
+                                    签到姓名：{{ each['name']}}<br>
+                                    签到日期：{{ each['date'] }}<br>
+                                    签到课程：{{ each['class_num'] }}<br>
+                                    签到时间：{{ each['time'] }}<br>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                         {% endif %}
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Javascript -->
+        <script src="static/assets/js/jquery-1.8.2.min.js"></script>
+        <script src="static/assets/bootstrap/js/bootstrap.min.js"></script>
+        <script src="static/assets/js/jquery.backstretch.min.js"></script>
+        <script src="static/assets/js/scripts.js"></script>
+
+    </body>
+
+</html>
+
