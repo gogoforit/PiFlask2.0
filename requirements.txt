@@ -1,0 +1,3 @@
+Flask==0.12.1
+flask_bootstrap==3.3.7.1
+mongoengine==0.13.0
