@@ -47,7 +47,6 @@ def get_macs():
     for each in info:
         ip = None
         mac = None
-        print(each)
         theinfo = each.split(' ')
         for each2 in theinfo:
           if ':' in each2:
