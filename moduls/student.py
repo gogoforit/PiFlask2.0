@@ -7,3 +7,4 @@ class Student(Document):
     student_id = StringField(required=True)
     class_id = StringField(required=True)
     address_mac = StringField(required=True)
+    meta = {'db_alias': 'local_db'}

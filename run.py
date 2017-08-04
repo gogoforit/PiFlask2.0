@@ -1,30 +1,40 @@
 import os
+from mongoengine import *
+from mongoengine.context_managers import switch_db
 from flask import flash
 from flask import Flask
 from flask_bootstrap import Bootstrap
 from flask import render_template
 from flask import request
-from flask_mongoengine import MongoEngine
-from flask_mongoengine import MongoEngineSessionInterface
-from flask_login import LoginManager
 from moduls.student import Student
 
+local_username = os.environ['LOCAL_USERNAME']
+local_password = os.environ['LOCAL_PASSWORD']
+local_host = os.environ['LOCAL_HOST']
+local_db = os.environ['LOCAL_DB']
+remote_username = os.environ['REMOTE_USERNAME']
+remote_password = os.environ['REMOTE_PASSWORD']
+remote_host = os.environ['REMOTE_HOST']
+remote_db = os.environ['REMOTE_DB']
 
-db = MongoEngine()
-login_manager = LoginManager()
+connect(db=remote_db,
+        host=remote_host,
+        username=remote_username,
+        password=remote_password,
+        alias='remote_db')
+
+connect(db=local_db,
+        host=local_host,
+        username=local_username,
+        password=local_password,
+        alias='local_db')
+
+
 app_secret_key = os.environ['APP_SECRET_KEY']
-mongo_db = os.environ['MONGO_DB']
-mongo_host = os.environ['MONGO_HOST']
-mongo_port = os.environ['MONGO_PORT']
-mongo_username = os.environ['MONGO_USERNAME']
-mongo_password = os.environ['MONGO_PASSWORD']
-
-
 app = Flask(__name__)
 app.config.from_object(__name__)
 bootstrap = Bootstrap(app)
 app.config['SECRET_KEY'] = 'hard to guess'
-app.session_interface = MongoEngineSessionInterface(db)
 app.secret_key = app_secret_key
 
 
@@ -68,41 +78,36 @@ def index_page():
 
 @app.route('/register', methods={'POST', 'GET'})
 def register():
-    app.config['MONGODB_SETTINGS'] = {  # 配置MongoDB
-        'db': mongo_db,
-        'host': mongo_host,
-        'port': int(mongo_port),
-        'username': mongo_username,
-        'password': mongo_password
-    }
-    if request.method == 'GET':
-        return render_template('register.html')
-    macs = get_macs()
-    ip = request.remote_addr
-    mac = macs[ip]
-    mac = mac.replace(':', '-')
-    address_mac = mac.lower()
-    form = request.form
-    name = form.get('name')
-    student_id = form.get('student_id')
-    class_id = form.get('class_number')
-    if len(mac) != 17:
-        flash('mac长度有误，请确认后再输入！')
-        return render_template('register.html')
-    if (mac[2] != '-' or mac[5] != '-' or mac[8] != '-' or mac[11] != '-'):
-        flash('输入格式错误，请检查您的输入是否包含非法符号！')
-        return render_template('register.html')
-    if Student.objects(name=name):
-        flash('姓名与数据库中信息冲突，请确认后，重新输入！')
-        return render_template('register.html')
-    elif Student.objects(address_mac=mac):
-        flash('mac地址与数据库中信息冲突，请确认后，重新输入！')
-        return render_template('register.html')
-    else:
-        student = Student(name=name, class_id=class_id, address_mac=address_mac, student_id=student_id)
-        student.save()
-        flash('注册成功！')
-        return render_template('register.html')
+    from moduls.student import Student
+    with switch_db(Student, 'local_db') as Student:
+        if request.method == 'GET':
+            return render_template('register.html')
+        macs = get_macs()
+        ip = request.remote_addr
+        mac = macs[ip]
+        mac = mac.replace(':', '-')
+        address_mac = mac.lower()
+        form = request.form
+        name = form.get('name')
+        student_id = form.get('student_id')
+        class_id = form.get('class_number')
+        if len(mac) != 17:
+            flash('mac长度有误，请确认后再输入！')
+            return render_template('register.html')
+        if (mac[2] != '-' or mac[5] != '-' or mac[8] != '-' or mac[11] != '-'):
+            flash('输入格式错误，请检查您的输入是否包含非法符号！')
+            return render_template('register.html')
+        if Student.objects(name=name):
+            flash('姓名与数据库中信息冲突，请确认后，重新输入！')
+            return render_template('register.html')
+        elif Student.objects(address_mac=mac):
+            flash('mac地址与数据库中信息冲突，请确认后，重新输入！')
+            return render_template('register.html')
+        else:
+            student = Student(name=name, class_id=class_id, address_mac=address_mac, student_id=student_id)
+            student.save()
+            flash('注册成功！')
+            return render_template('register.html')
 
 
 # @app.route('/query', methods={'POST', 'GET'})
