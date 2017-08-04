@@ -56,6 +56,8 @@
                         <input type="text" id="firstname" name="name" placeholder="请输入您的姓名...">
                         <label for="lastname">查询日期&nbsp&nbsp&nbsp(例如:2017-05-05)</label>
                         <input type="text" id="lastname" name="date" placeholder="请输入您要查询的日期...">
+                        <label for="firstname">班 级</label>
+                        <input type="text" id="class_id" name="class_id" placeholder="请输入您要查询的班级...">
                         <br>
                         {{ get_flashed_messages()[0] }}
                         <br>
@@ -71,7 +73,7 @@
                                     签到姓名：{{ each['name']}}<br>
                                     签到日期：{{ each['date'] }}<br>
                                     签到课程：{{ each['class_num'] }}<br>
-                                    签到时间：{{ each['time'] }}<br>
+                                    签到时间：{{ each['connect_time'] }}<br>
                                 </li>
                             {% endfor %}
                         </ul>
