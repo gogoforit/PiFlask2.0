@@ -38,7 +38,6 @@ bootstrap = Bootstrap(app)
 
 # config
 app.config.update(
-    DEBUG=True,
     SECRET_KEY='secret_xxx'
 )
 
@@ -273,4 +272,4 @@ def load_user(userid):
 
 
 if __name__ == '__main__':
-    app.run(port=8899)
+    app.run(port=8899, threaded=True)
