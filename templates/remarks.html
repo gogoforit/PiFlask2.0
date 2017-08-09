@@ -25,7 +25,7 @@
 
     </head>
 
-    <body >
+    <body background={{ url_for('static',filename='assets/img/backgrounds/1.jpg') }}>
 
         <div class="header">
             <div class="container
@@ -40,9 +40,8 @@
                         <div style="float: right ;width: 60px;height: 60px" >
                             <img  class="logo_img"   src={{ url_for('static',filename='assets/img/logo.jpg') }}  >
                         </div>
-
                     </div>
-
+                    
                 </div>
             </div>
         </div>
@@ -51,26 +50,23 @@
             <div class="row">
 
                 <div class="register span6">
-                    <form action="" method="get">
-                        <h2>WIFI签到系统</h2>
-                        <a href="register">
-                            <button type="button">信息注册</button>
-                        </a>
-                        <a href="query">
-                            <button type="button">签到查询</button>
-                        </a>
-                        <a href="modify_information">
-                            <button type="button">信息修改</button>
-                        </a>
-                        <a href="remarks">
-                            <button type="button">课程备注</button>
+                    <form action="/remarks" method="post">
+                        <h2>课程备注</h2>
+                        <label for="firstname">班 级</label>
+                        <input type="text" id="firstname" name="class_id" placeholder="请输入您的班级...">
+                        <label for="firstname">备 注</label>
+                        <input type="text" id="class_id" name="remarks" placeholder="请输入您该堂课的备注...">
+                        <br>
+                        {{ get_flashed_messages()[0] }}
+                        <br>
+                        <button type="submit">提交</button>
+                        <a href="/">
+                            <button type="button">返回</button>
                         </a>
 
                     </form>
-
                 </div>
             </div>
-
         </div>
 
         <!-- Javascript -->
