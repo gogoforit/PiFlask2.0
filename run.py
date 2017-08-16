@@ -229,6 +229,7 @@ def login():
 @app.route('/remarks', methods=['GET', 'POST'])
 @login_required
 def remarks():
+    today_date = time.strftime('%Y-%m-%d', time.localtime(time.time()))
     from moduls.remarks import Remarks
     if request.method == 'GET':
         return render_template('remarks.html')
@@ -245,7 +246,8 @@ def remarks():
             else:
                 remarks = Remarks(class_id=request.form['class_id'],
                                   class_num=get_class_num(),
-                                  remarks=request.form['remarks'])
+                                  remarks=request.form['remarks'],
+                                  date=today_date)
                 remarks.save()
                 flash('设置成功')
                 return render_template('remarks.html')
